@@ -4,13 +4,19 @@
 
 Biblioteca pequeña de .NET 10 para generar el mismo reporte tabular en **DOCX**, **XLSX** y **PDF**, y extraer la capa de texto de un PDF. Usa [Open XML SDK](https://github.com/dotnet/Open-XML-SDK), [ClosedXML](https://github.com/ClosedXML/ClosedXML), [PDFsharp](https://github.com/empira/PDFsharp) y [PdfPig](https://github.com/UglyToad/PdfPig).
 
-Clona el repositorio y añade una referencia al proyecto de la biblioteca desde tu aplicación:
+Cuando la primera versión esté publicada en NuGet.org, instálala con:
+
+```powershell
+dotnet add package Lbe.Documents --version 0.1.0
+```
+
+Mientras tanto, clona el repositorio y añade una referencia al proyecto de la biblioteca desde tu aplicación:
 
 ```powershell
 dotnet add <ruta-a-tu-aplicacion.csproj> reference src/Lbe.Documents/Lbe.Documents.csproj
 ```
 
-La versión `0.1.0` también se puede empaquetar localmente; todavía no se ha publicado en NuGet.
+La versión `0.1.0` también se puede empaquetar localmente. Consulta [cómo se publica](PUBLISHING.md) para configurar NuGet.org y lanzar un release.
 
 ## Inicio rápido
 
