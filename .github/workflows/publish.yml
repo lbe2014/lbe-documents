@@ -1,0 +1,57 @@
+name: Publish to NuGet
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Verify release version and NuGet account
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          NUGET_USER: ${{ vars.NUGET_USER }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$NUGET_USER" ]]; then
+            echo 'Set the repository variable NUGET_USER to your nuget.org username.' >&2
+            exit 1
+          fi
+          version=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' src/Lbe.Documents/Lbe.Documents.csproj)
+          if [[ -z "$version" || "$RELEASE_TAG" != "v$version" ]]; then
+            echo "Release tag must be v$version (got $RELEASE_TAG)." >&2
+            exit 1
+          fi
+          echo "PACKAGE_VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Test
+        run: dotnet test tests/Lbe.Documents.Tests/Lbe.Documents.Tests.csproj -c Release
+
+      - name: Pack
+        run: dotnet pack src/Lbe.Documents/Lbe.Documents.csproj -c Release --no-restore -o artifacts
+
+      - name: Get short-lived NuGet credential
+        uses: NuGet/login@v1
+        id: nuget_login
+        with:
+          user: ${{ vars.NUGET_USER }}
+
+      - name: Publish package
+        shell: bash
+        env:
+          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
+        run: dotnet nuget push "artifacts/Lbe.Documents.${PACKAGE_VERSION}.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
