@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Lbe.Documents</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Leopoldo Benavente Cadena</Authors>
     <Description>Small open-source document reporting toolkit for .NET.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

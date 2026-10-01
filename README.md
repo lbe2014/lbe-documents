@@ -4,10 +4,10 @@
 
 Biblioteca pequeña de .NET 10 para generar el mismo reporte tabular en **DOCX**, **XLSX** y **PDF**, y extraer la capa de texto de un PDF. Usa [Open XML SDK](https://github.com/dotnet/Open-XML-SDK), [ClosedXML](https://github.com/ClosedXML/ClosedXML), [PDFsharp](https://github.com/empira/PDFsharp) y [PdfPig](https://github.com/UglyToad/PdfPig).
 
-La versión [`0.1.0` ya está publicada en NuGet.org](https://www.nuget.org/packages/Lbe.Documents/). Instálala con:
+[`Lbe.Documents` está disponible en NuGet.org](https://www.nuget.org/packages/Lbe.Documents/). Instala la versión de este repositorio con:
 
 ```powershell
-dotnet add package Lbe.Documents --version 0.1.0
+dotnet add package Lbe.Documents --version 0.1.1
 ```
 
 Si vas a desarrollar la biblioteca desde el código fuente, clona el repositorio y añade una referencia al proyecto desde tu aplicación:
@@ -16,7 +16,7 @@ Si vas a desarrollar la biblioteca desde el código fuente, clona el repositorio
 dotnet add <ruta-a-tu-aplicacion.csproj> reference src/Lbe.Documents/Lbe.Documents.csproj
 ```
 
-Puedes empaquetar la versión actual localmente. Para publicar una versión nueva, aumenta primero la versión del proyecto; consulta el [procedimiento de publicación](PUBLISHING.md). NuGet.org no permite sustituir el paquete `0.1.0` ya publicado.
+Puedes empaquetar la versión actual localmente. Para publicar una versión nueva, aumenta primero la versión del proyecto; consulta el [procedimiento de publicación](https://github.com/lbe2014/lbe-documents/blob/main/PUBLISHING.md). NuGet.org no permite sustituir una versión ya publicada.
 
 ## Inicio rápido
 
@@ -35,7 +35,7 @@ using var excel = File.Create("pedidos.xlsx");
 DocumentExporter.WriteXlsx(report, excel);
 ```
 
-El [ejemplo completo](examples/Lbe.Documents.Example/Program.cs) también crea un PDF y vuelve a leer su texto. Para el PDF debes suministrar una fuente TTF y configurar el `IFontResolver` de PDFsharp antes de crear `XFont`; así funciona también en Linux sin depender de fuentes instaladas en el servidor. No se incluye un archivo de fuente en el repositorio.
+El [ejemplo completo](https://github.com/lbe2014/lbe-documents/blob/main/examples/Lbe.Documents.Example/Program.cs) también crea un PDF y vuelve a leer su texto. Para el PDF debes suministrar una fuente TTF y configurar el `IFontResolver` de PDFsharp antes de crear `XFont`; la configuración evita depender de la selección automática de fuentes del servidor. No se incluye un archivo de fuente en el repositorio.
 
 ```powershell
 dotnet run --project examples/Lbe.Documents.Example -- ./salida C:/Windows/Fonts/arial.ttf
@@ -57,3 +57,7 @@ dotnet pack src/Lbe.Documents/Lbe.Documents.csproj -c Release
 ```
 
 El código es MIT. Revisa también las licencias de las dependencias y de la fuente TTF que uses en tu aplicación.
+
+## Cambios de 0.1.1
+
+Actualización de documentación: instalación desde NuGet y enlace absoluto al ejemplo. No cambia la API ni las dependencias de 0.1.0.
